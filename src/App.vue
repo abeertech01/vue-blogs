@@ -2,15 +2,18 @@
   <div id="app">
     <app-header />
     <router-view />
+    <app-footer />
   </div>
 </template>
 
 <script>
 import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
 export default {
   name: "App",
   components: {
     AppHeader: Header,
+    AppFooter: Footer,
   },
 };
 </script>
@@ -20,6 +23,7 @@ export default {
 body {
   font-family: $reem-kufi;
   color: $charcoal;
+  background-color: $light-grey;
 }
 
 * {
@@ -38,5 +42,17 @@ a:hover {
 ul {
   list-style: none;
   padding-left: 0;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.container {
+  max-width: pr(1440);
+  margin: 0 auto;
 }
 </style>

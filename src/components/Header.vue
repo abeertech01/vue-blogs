@@ -1,13 +1,13 @@
 <template>
   <div class="header">
-    <div class="header-inside">
+    <div class="header-inside container">
       <div class="logo">
         <router-link :to="{ name: 'Home' }">VueBlogs</router-link>
       </div>
-      <div v-if="false" class="menu-links">
+      <div class="menu-links">
         <ul>
           <li>
-            <router-link to="#">Home</router-link>
+            <router-link :to="{ name: 'Home' }">Home</router-link>
           </li>
           <li>
             <router-link to="#">Blogs</router-link>
@@ -57,12 +57,15 @@ export default {
 
 <style lang="scss" scoped>
 @import "../sass/variables";
+@import "../sass/mixins";
 .header {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   &-inside {
+    min-height: pr(55);
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: pr(5) pr(10);
 
     .logo {
@@ -74,6 +77,24 @@ export default {
 
     .menu {
       font-size: pr(30);
+      @include bp-up(medium) {
+        display: none;
+      }
+    }
+
+    .menu-links {
+      @include bp-down(small) {
+        display: none;
+      }
+      ul {
+        li {
+          display: inline-block;
+          font-size: pr(20);
+          &:not(:last-child) {
+            margin-right: pr(30);
+          }
+        }
+      }
     }
   }
 
@@ -95,6 +116,10 @@ export default {
           margin-bottom: pr(20);
         }
       }
+    }
+
+    @include bp-up(medium) {
+      display: none;
     }
   }
 
