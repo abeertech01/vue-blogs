@@ -1,0 +1,15 @@
+// Font links
+@import url('https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&display=swap');
+
+// Function
+@function pr($px){
+  @return $px/16 + rem;
+}
+
+// Fonts
+$reem-kufi: 'Reem Kufi', sans-serif;
+
+// Colors
+$charcoal: #303030;
+$light-grey: rgb(241, 241, 241);
+$light-grey-2: rgb(228, 228, 228);
