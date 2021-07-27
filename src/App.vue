@@ -34,4 +34,9 @@ a:hover {
   text-decoration: none;
   color: $charcoal;
 }
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
 </style>
