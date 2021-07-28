@@ -25,13 +25,13 @@
       <div class="menu-links">
         <ul>
           <li>
-            <router-link to="#">Home</router-link>
+            <router-link :to="{ name: 'Home' }">Home</router-link>
           </li>
           <li>
             <router-link to="#">Blogs</router-link>
           </li>
           <li>
-            <router-link to="#">Login/Register</router-link>
+            <router-link :to="{ name: 'Login' }">Login/Register</router-link>
           </li>
         </ul>
       </div>

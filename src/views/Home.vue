@@ -13,7 +13,9 @@
             cumque! Perspiciatis mollitia illum repellat.
           </p>
           <div class="hero-auth">
-            <router-link class="auth-btn" to="#">Login/Register</router-link>
+            <router-link class="auth-btn" :to="{ name: 'Login' }"
+              >Login/Register</router-link
+            >
           </div>
         </div>
       </div>
