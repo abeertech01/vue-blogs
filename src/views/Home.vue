@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <!-- Hero Section -->
     <div class="hero">
       <div class="hero-inside container">
         <div class="hero-illus">
@@ -17,13 +18,34 @@
         </div>
       </div>
     </div>
+
+    <!-- Top Blogs Section -->
+    <div class="top-blogs">
+      <h1 class="top-blogs__heading">Top Blogs</h1>
+      <div class="top-blogs__inside container">
+        <top-blog
+          class="top-blogs__each"
+          :blog="blog"
+          v-for="(blog, index) in topBlogs"
+          :key="index"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import TopBlog from "../components/TopBlog.vue";
 export default {
   name: "Home",
-  components: {},
+  components: {
+    TopBlog,
+  },
+  computed: {
+    topBlogs() {
+      return this.$store.state.sampleTopBlogs;
+    },
+  },
 };
 </script>
 
@@ -111,6 +133,25 @@ export default {
           padding: pr(1) pr(7);
           font-size: pr(19);
         }
+      }
+    }
+  }
+
+  .top-blogs {
+    margin-bottom: pr(80);
+    &__inside {
+      padding: pr(5) pr(40);
+      @include bp-up(large) {
+        padding: pr(5) pr(25);
+      }
+    }
+    &__heading {
+      text-align: center;
+      margin-bottom: pr(50);
+    }
+    &__each {
+      &:not(:last-child) {
+        margin-bottom: pr(60);
       }
     }
   }

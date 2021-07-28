@@ -62,6 +62,9 @@ export default {};
     @include bp-up(medium) {
       grid-template-columns: 1fr 1fr 0.1fr 1.5fr;
     }
+    @include bp-up(large) {
+      padding: pr(25) pr(25);
+    }
 
     .logo-socials {
       @include bp-up(medium) {
