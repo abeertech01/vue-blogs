@@ -62,7 +62,6 @@ export default {
         await dataBase.set({
           name: this.name,
           email: this.email,
-          password: this.password,
         });
         this.$router.push({ name: "Home" });
         return;

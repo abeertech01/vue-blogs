@@ -1,5 +1,8 @@
 <template>
   <div class="forgot-password">
+    <div v-show="isLoading" class="loading">
+      <button @click="loadingDone">Done</button>
+    </div>
     <h1>VueBlogs</h1>
     <div class="forgot-password__inside">
       <form>
@@ -12,7 +15,7 @@
             <i class="bx bx-mail-send"></i
             ><input type="email" placeholder="Email" v-model="email" />
           </div>
-          <button class="reset-btn">Reset</button>
+          <button @click.prevent="resetPW" class="reset-btn">Reset</button>
         </div>
       </form>
     </div>
@@ -20,12 +23,25 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
+import "firebase/auth";
 export default {
   name: "ForgotPassword",
   data() {
     return {
       email: "",
+      isLoading: false,
     };
+  },
+  methods: {
+    resetPW() {
+      this.isLoading = true;
+      firebase.auth().sendPasswordResetEmail(this.email);
+    },
+    loadingDone() {
+      this.$router.push({ name: "Login" });
+      this.isLoading = false;
+    },
   },
 };
 </script>
@@ -87,6 +103,29 @@ export default {
   &__reset-text {
     text-align: center;
     margin-bottom: pr(10);
+  }
+
+  .loading {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #303030a8;
+
+    button {
+      text-transform: uppercase;
+      padding: pr(10) pr(20);
+      font-size: pr(20);
+      cursor: pointer;
+      font-weight: 600;
+      background-color: $light-grey;
+      border: none;
+      border-radius: pr(5);
+    }
   }
 }
 </style>
