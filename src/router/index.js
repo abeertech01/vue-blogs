@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import ForgotPassword from '../views/ForgotPassword.vue'
+import Blogs from "../views/Blogs.vue"
+import BlogWriting from "../views/BlogWriting.vue"
 
 Vue.use(VueRouter)
 
@@ -38,6 +40,22 @@ const routes = [
     component: ForgotPassword,
     meta: {
       title: "Forgot Password"
+    }
+  },
+  {
+    path: '/blogs',
+    name: 'Blogs',
+    component: Blogs,
+    meta: {
+      title: "Blogs"
+    }
+  },
+  {
+    path: '/blog-writing',
+    name: 'BlogWriting',
+    component: BlogWriting,
+    meta: {
+      title: "Blog Writing"
     }
   },
 ]

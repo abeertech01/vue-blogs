@@ -30,8 +30,11 @@
           <li>
             <router-link to="#">Blogs</router-link>
           </li>
-          <li>
+          <li v-if="!user">
             <router-link :to="{ name: 'Login' }">Login/Register</router-link>
+          </li>
+          <li v-else>
+            <p @click.prevent="logout">Logout</p>
           </li>
         </ul>
       </div>
@@ -44,7 +47,22 @@
 </template>
 
 <script>
-export default {};
+import firebase from "firebase/app";
+import "firebase/auth";
+export default {
+  name: "Footer",
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
+  },
+  methods: {
+    logout() {
+      firebase.auth().signOut();
+      window.location.reload();
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -100,7 +118,8 @@ export default {};
             text-align: left;
             display: block;
           }
-          a {
+          a,
+          p {
             font-size: pr(18);
           }
         }
