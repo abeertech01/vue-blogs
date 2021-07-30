@@ -10,13 +10,21 @@
             <router-link :to="{ name: 'Home' }">Home</router-link>
           </li>
           <li>
-            <router-link to="#">Blogs</router-link>
+            <router-link :to="{ name: 'Blogs' }">Blogs</router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'BlogWriting' }">Write</router-link>
           </li>
           <li v-if="!user">
             <router-link :to="{ name: 'Login' }">Login/Register</router-link>
           </li>
           <li v-else>
             <p @click="logout">Logout</p>
+          </li>
+          <li class="initial" v-if="profileInitials">
+            <router-link :to="{ name: 'Profile' }" class="inside">{{
+              profileInitials.toUpperCase()
+            }}</router-link>
           </li>
         </ul>
       </div>
@@ -27,11 +35,21 @@
     <transition name="mobile-nav">
       <div v-if="menuOpen" class="mobile-menu-links">
         <ul>
+          <li class="initial" v-if="profileInitials">
+            <router-link :to="{ name: 'Profile' }" class="inside">{{
+              profileInitials.toUpperCase()
+            }}</router-link>
+          </li>
           <li>
             <router-link :to="{ name: 'Home' }">Home</router-link>
           </li>
           <li>
-            <router-link to="#">Blogs</router-link>
+            <router-link :to="{ name: 'Blogs' }">Blogs</router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'BlogWriting' }"
+              >Blog Writing</router-link
+            >
           </li>
           <li v-if="!user">
             <router-link :to="{ name: 'Login' }">Login/Register</router-link>
@@ -67,6 +85,9 @@ export default {
   computed: {
     user() {
       return this.$store.state.user;
+    },
+    profileInitials() {
+      return this.$store.state.profileInitials;
     },
   },
 };
@@ -108,7 +129,7 @@ export default {
           display: inline-block;
           font-size: pr(20);
           &:not(:last-child) {
-            margin-right: pr(30);
+            margin-right: pr(20);
           }
         }
       }
@@ -138,6 +159,21 @@ export default {
 
     @include bp-up(medium) {
       display: none;
+    }
+  }
+
+  .initial {
+    width: pr(30);
+    height: pr(30);
+    text-align: center;
+    border-radius: 50%;
+    font-size: pr(20);
+    background-color: #616161;
+
+    a {
+      position: relative;
+      bottom: pr(1);
+      color: $light-grey;
     }
   }
 

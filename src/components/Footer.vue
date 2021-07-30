@@ -3,7 +3,7 @@
     <div class="footer-inside container">
       <div class="logo-socials">
         <div class="logo">
-          <router-link :to="{ name: 'Home' }">VueBlogs - Abeer</router-link>
+          <router-link :to="{ name: 'Home' }">VueBlogs</router-link>
         </div>
         <div class="socials">
           <a href="https://www.facebook.com/abeertech01/" target="_blank"

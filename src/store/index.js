@@ -22,6 +22,11 @@ export default new Vuex.Store({
         photo: "pic-2"
       }
     ],
+    blogHTML: "Write your blog title here...",
+    blogTitle: "",
+    blogPhotoName: "",
+    blogPhotoFileURL: null,
+    blogPhotoPreview: null,
     user: null,
     profileId: null,
     profileName: null,
@@ -39,6 +44,9 @@ export default new Vuex.Store({
     },
     updateUser(state, payload) {
       state.user = payload;
+    },
+    changeName(state, payload) {
+      state.profileName = payload;
     }
   },
   actions: {
@@ -46,6 +54,13 @@ export default new Vuex.Store({
       const dataBase = await db.collection("users").doc(firebase.auth().currentUser.uid);
       const resultDB = await dataBase.get();
       context.commit("setProfileInfo", resultDB);
+      context.commit("setProfileInitials");
+    },
+    async updateUserSettings(context) {
+      const dataBase = await db.collection('users').doc(context.state.profileId);
+      await dataBase.update({
+        name: context.state.profileName
+      });
       context.commit("setProfileInitials");
     }
   },
