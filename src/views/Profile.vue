@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <h1 class="profile__title">Profile</h1>
-    <p class="profile__subtitle">You can edit and save.</p>
+    <p class="profile__subtitle">You can edit your name and save it.</p>
     <form>
       <div class="inputs">
         <input type="text" placeholder="Name" v-model="name" />
@@ -38,8 +38,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "../sass/variables";
+@import "../sass/mixins";
 
 .profile {
+  padding: pr(25);
   text-align: center;
 
   &__subtitle {
@@ -47,7 +49,7 @@ export default {
   }
 
   form {
-    max-width: 75%;
+    max-width: pr(360);
     margin: 0 auto;
     display: flex;
     flex-direction: column;
