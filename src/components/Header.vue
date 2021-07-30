@@ -12,8 +12,11 @@
           <li>
             <router-link to="#">Blogs</router-link>
           </li>
-          <li>
+          <li v-if="!user">
             <router-link :to="{ name: 'Login' }">Login/Register</router-link>
+          </li>
+          <li v-else>
+            <p @click="logout">Logout</p>
           </li>
         </ul>
       </div>
@@ -30,8 +33,11 @@
           <li>
             <router-link to="#">Blogs</router-link>
           </li>
-          <li>
+          <li v-if="!user">
             <router-link :to="{ name: 'Login' }">Login/Register</router-link>
+          </li>
+          <li v-else>
+            <p @click="logout">Logout</p>
           </li>
         </ul>
       </div>
@@ -40,6 +46,8 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
+import "firebase/auth";
 export default {
   name: "Header",
   data() {
@@ -50,6 +58,15 @@ export default {
   methods: {
     openNav() {
       this.menuOpen = !this.menuOpen;
+    },
+    logout() {
+      firebase.auth().signOut();
+      window.location.reload();
+    },
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
     },
   },
 };
@@ -107,7 +124,8 @@ export default {
     background-color: $charcoal;
     ul {
       li {
-        a {
+        a,
+        p {
           color: $light-grey;
           font-size: pr(18);
           text-transform: uppercase;

@@ -23,15 +23,56 @@
             <i class="bx bxs-lock-alt"></i
             ><input type="password" placeholder="Password" v-model="password" />
           </div>
-          <button class="reg-btn">Register</button>
+          <button @click.prevent="register" class="reg-btn">Register</button>
         </div>
       </form>
+      <div class="error" v-show="error">{{ errorMsg }}</div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import firebase from "firebase/app";
+import "firebase/auth";
+import db from "../firebase/firebaseInit";
+export default {
+  name: "Register",
+  data() {
+    return {
+      name: "",
+      email: "",
+      password: "",
+      error: null,
+      errorMsg: "",
+    };
+  },
+  methods: {
+    async register() {
+      console.log("clicked");
+      if (this.name !== "" && this.email !== "" && this.password !== "") {
+        this.error = false;
+        this.errorMsg = "";
+        const firebaseAuth = await firebase.auth();
+        const createUser = await firebaseAuth.createUserWithEmailAndPassword(
+          this.email,
+          this.password
+        );
+        const result = await createUser;
+        const dataBase = db.collection("users").doc(result.user.uid);
+        await dataBase.set({
+          name: this.name,
+          email: this.email,
+          password: this.password,
+        });
+        this.$router.push({ name: "Home" });
+        return;
+      }
+      this.error = true;
+      this.errorMsg = "Please fill out all fields!";
+      return;
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -68,7 +109,7 @@ export default {};
             font-size: pr(25);
           }
           input {
-            font-size: pr(18);
+            font-size: pr(16);
             padding: pr(6) pr(11);
             border: none;
             outline: none;

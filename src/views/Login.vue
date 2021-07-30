@@ -19,8 +19,9 @@
             <i class="bx bxs-lock-alt"></i
             ><input type="password" placeholder="Password" v-model="password" />
           </div>
-          <button class="login-btn">Login</button>
+          <button @click.prevent="login" class="login-btn">Login</button>
         </div>
+        <div class="error" v-show="error">{{ errorMsg }}</div>
         <p class="login__fotgot-pass">
           Forgot password?
           <router-link class="forgot-pass-link" :to="{ name: 'ForgotPassword' }"
@@ -33,7 +34,36 @@
 </template>
 
 <script>
-export default {};
+import firebase from "firebase/app";
+import "firebase/auth";
+export default {
+  name: "Login",
+  data() {
+    return {
+      email: "",
+      password: "",
+      error: null,
+      errorMsg: "",
+    };
+  },
+  methods: {
+    login() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          this.$router.push({ name: "Home" });
+          this.error = false;
+          this.errorMsg = "";
+          console.log(firebase.auth().currentUser.uid);
+        })
+        .catch((err) => {
+          this.error = true;
+          this.errorMsg = err.message;
+        });
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -86,6 +116,12 @@ export default {};
           border: none;
           border-radius: pr(3);
         }
+      }
+
+      .error {
+        color: red;
+        margin: pr(5) 0;
+        text-align: center;
       }
     }
   }

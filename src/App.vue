@@ -9,11 +9,41 @@
 <script>
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
+import firebase from "firebase/app";
+import "firebase/auth";
 export default {
   name: "App",
   components: {
     AppHeader: Header,
     AppFooter: Footer,
+  },
+  created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.$store.commit("updateUser", user);
+      if (user) {
+        this.$store.dispatch("getCurrentUser");
+        console.log(this.$store.state.profileEmail);
+      }
+    });
+    this.checkRoute();
+  },
+  methods: {
+    checkRoute() {
+      if (this.$store.state.user) {
+        if (
+          this.$route.name === "Login" ||
+          this.$route.name === "Register" ||
+          this.$route.name === "ForgotPassword"
+        ) {
+          this.$router.push({ name: "Home" });
+        }
+      }
+    },
+  },
+  watch: {
+    $route() {
+      this.checkRoute();
+    },
   },
 };
 </script>

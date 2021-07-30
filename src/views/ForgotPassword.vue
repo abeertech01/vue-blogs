@@ -5,7 +5,7 @@
       <form>
         <h3>Reset Password</h3>
         <p class="forgot-password__reset-text">
-          Forgot password? Enter your email to reset
+          Forgot password? Enter your email to reset it.
         </p>
         <div class="inputs">
           <div class="input">
@@ -20,7 +20,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "ForgotPassword",
+  data() {
+    return {
+      email: "",
+    };
+  },
+};
 </script>
 
 <style lang="scss">
