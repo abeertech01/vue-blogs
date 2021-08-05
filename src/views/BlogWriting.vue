@@ -1,6 +1,6 @@
 <template>
   <div class="blog-writing">
-    <BlogCoverPreview v-show="this.$store.state.blogPhotoPreview" />
+    <BlogPhotoPreview v-show="this.$store.state.blogPhotoPreview" />
     <div class="blog-writing__inside container">
       <div v-show="error" class="err-message">
         <p><span>Error:</span> {{ this.errorMsg }}</p>
@@ -21,7 +21,13 @@
             @change="fileChange"
             accept=".png, .jpg, .jpeg"
           />
-          <button class="preview">Preview Photo</button>
+          <button
+            @click="previewBlogPhoto"
+            class="preview"
+            :class="{ active: havingPhoto }"
+          >
+            Preview Photo
+          </button>
           <div class="chosen-file">
             File Chosen: {{ $store.state.blogPhotoName }}
           </div>
@@ -46,7 +52,7 @@
 </template>
 
 <script>
-import BlogCoverPreview from "../components/BlogCoverPreview.vue";
+import BlogPhotoPreview from "../components/BlogPhotoPreview.vue";
 import firebase from "firebase/app";
 import "firebase/storage";
 import db from "../firebase/firebaseInit";
@@ -57,13 +63,14 @@ Quill.register("modules/imageResize", ImageResize);
 export default {
   name: "BlogWriting",
   components: {
-    BlogCoverPreview,
+    BlogPhotoPreview,
   },
   data() {
     return {
       file: null,
       error: null,
       errorMsg: "",
+      havingPhoto: null,
       customModulesForEditor: [{ alias: "imageResize", module: ImageResize }],
       editorSettings: {
         modules: {
@@ -169,6 +176,9 @@ export default {
         this.error = false;
       }, 5000);
       return;
+    },
+    previewBlogPhoto() {
+      this.$store.commit("openPhotoPreview");
     },
   },
 };
@@ -289,6 +299,10 @@ export default {
         margin-right: pr(14);
       }
     }
+  }
+
+  .active {
+    background-color: #585858;
   }
 }
 </style>

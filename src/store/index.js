@@ -59,6 +59,9 @@ export default new Vuex.Store({
     },
     updateBlogTitle(state, payload) {
       state.blogTitle = payload;
+    },
+    openPhotoPreview(state) {
+      state.blogPhotoPreview = !state.blogPhotoPreview;
     }
   },
   actions: {
