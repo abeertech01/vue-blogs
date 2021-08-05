@@ -7,6 +7,7 @@ import ForgotPassword from '../views/ForgotPassword.vue'
 import Blogs from "../views/Blogs.vue"
 import BlogWriting from "../views/BlogWriting.vue"
 import Profile from "../views/Profile.vue"
+import BlogPreview from "../views/BlogPreview.vue"
 
 Vue.use(VueRouter)
 
@@ -65,6 +66,14 @@ const routes = [
     component: Profile,
     meta: {
       title: "Profile"
+    }
+  },
+  {
+    path: '/blog-preview',
+    name: 'BlogPreview',
+    component: BlogPreview,
+    meta: {
+      title: "Blog Preview"
     }
   },
 ]

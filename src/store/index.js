@@ -22,10 +22,10 @@ export default new Vuex.Store({
         photo: "pic-2"
       }
     ],
-    blogHTML: "Write your blog title here...",
+    blogHTML: "Write your blog here...",
     blogTitle: "",
     blogPhotoName: "",
-    blogPhotoFileURL: null,
+    blogPhotoURL: null,
     blogPhotoPreview: null,
     user: null,
     profileId: null,
@@ -47,6 +47,18 @@ export default new Vuex.Store({
     },
     changeName(state, payload) {
       state.profileName = payload;
+    },
+    insertBlog(state, payload) {
+      state.blogHTML = payload;
+    },
+    insertFileName(state, payload) {
+      state.blogPhotoName = payload;
+    },
+    createFileURL(state, payload) {
+      state.blogPhotoURL = payload;
+    },
+    updateBlogTitle(state, payload) {
+      state.blogTitle = payload;
     }
   },
   actions: {

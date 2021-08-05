@@ -33,7 +33,8 @@ export default {
         if (
           this.$route.name === "Login" ||
           this.$route.name === "Register" ||
-          this.$route.name === "ForgotPassword"
+          this.$route.name === "ForgotPassword" ||
+          this.$route.name === "Profile"
         ) {
           this.$router.push({ name: "Home" });
         }
