@@ -12,7 +12,7 @@
           <li>
             <router-link :to="{ name: 'Blogs' }">Blogs</router-link>
           </li>
-          <li>
+          <li v-show="profileId">
             <router-link :to="{ name: 'BlogWriting' }">Write</router-link>
           </li>
           <li v-if="!user">
@@ -33,7 +33,7 @@
       </div>
     </div>
     <transition name="mobile-nav">
-      <div v-if="menuOpen" class="mobile-menu-links">
+      <div @click="openNav" v-if="menuOpen" class="mobile-menu-links">
         <ul>
           <li class="initial" v-if="profileInitials">
             <router-link :to="{ name: 'Profile' }" class="inside">{{
@@ -46,10 +46,8 @@
           <li>
             <router-link :to="{ name: 'Blogs' }">Blogs</router-link>
           </li>
-          <li>
-            <router-link :to="{ name: 'BlogWriting' }"
-              >Blog Writing</router-link
-            >
+          <li v-show="profileId">
+            <router-link :to="{ name: 'BlogWriting' }">Write</router-link>
           </li>
           <li v-if="!user">
             <router-link :to="{ name: 'Login' }">Login/Register</router-link>
@@ -88,6 +86,9 @@ export default {
     },
     profileInitials() {
       return this.$store.state.profileInitials;
+    },
+    profileId() {
+      return this.$store.state.profileId;
     },
   },
 };

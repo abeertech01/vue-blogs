@@ -8,6 +8,10 @@ import Blogs from "../views/Blogs.vue"
 import BlogWriting from "../views/BlogWriting.vue"
 import Profile from "../views/Profile.vue"
 import BlogPreview from "../views/BlogPreview.vue"
+import ViewBlog from "../views/ViewBlog.vue"
+
+import firebase from "firebase/app";
+import "firebase/auth";
 
 Vue.use(VueRouter)
 
@@ -76,6 +80,14 @@ const routes = [
       title: "Blog Preview"
     }
   },
+  {
+    path: '/view-blog',
+    name: 'ViewBlog',
+    component: ViewBlog,
+    meta: {
+      title: "View Blog"
+    }
+  },
 ]
 
 const router = new VueRouter({
@@ -87,6 +99,17 @@ const router = new VueRouter({
 router.beforeEach((to, _, next) => {
   document.title = `${to.meta.title} | VueBlogs`;
   next();
+
+  if (to.name === 'Home' || to.name === 'Login' || to.name === 'Register' || to.name === 'ForgotPassword') {
+    next();
+  } else {
+    let user = firebase.auth().currentUser;
+    if (user) {
+      next();
+    } else {
+      next('/');
+    }
+  }
 })
 
 export default router

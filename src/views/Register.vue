@@ -48,8 +48,7 @@ export default {
   },
   methods: {
     async register() {
-      console.log("clicked");
-      if (this.name !== "" && this.email !== "" && this.password !== "") {
+      if (this.name !== "" && this.email !== "" && this.password.length < 6) {
         this.error = false;
         this.errorMsg = "";
         const firebaseAuth = await firebase.auth();
@@ -67,7 +66,8 @@ export default {
         return;
       }
       this.error = true;
-      this.errorMsg = "Please fill out all fields!";
+      this.errorMsg =
+        "Failed. Any field is empty or the given password is short";
       return;
     },
   },
