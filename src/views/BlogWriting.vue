@@ -1,6 +1,7 @@
 <template>
   <div class="blog-writing">
     <BlogPhotoPreview v-show="this.$store.state.blogPhotoPreview" />
+    <Loading v-show="loading" />
     <div class="blog-writing__inside container">
       <div v-show="error" class="err-message">
         <p><span>Error:</span> {{ this.errorMsg }}</p>
@@ -53,6 +54,7 @@
 
 <script>
 import BlogPhotoPreview from "../components/BlogPhotoPreview.vue";
+import Loading from "../components/Loading.vue";
 
 import firebase from "firebase/app";
 import "firebase/storage";
@@ -68,6 +70,7 @@ export default {
   name: "BlogWriting",
   components: {
     BlogPhotoPreview,
+    Loading,
     VueEditor,
   },
   data() {
@@ -75,6 +78,7 @@ export default {
       file: null,
       error: null,
       errorMsg: "",
+      loading: null,
       customModulesForEditor: [{ alias: "imageResize", module: ImageResize }],
       editorSettings: {
         modules: {
@@ -113,17 +117,18 @@ export default {
       const fileName = this.file.name;
       this.$store.commit("insertFileName", fileName);
       this.$store.commit("createFileURL", URL.createObjectURL(this.file));
+      console.log(this.file);
     },
     handleImage(file, Editor, cursorLocation, resetUploader) {
       const storageRef = firebase.storage().ref();
-      const docRef = storageRef.child(`documents/blogPostPhotos/${file.name}`);
+      const docRef = storageRef.child(`documents/blogPhotos/${file.name}`);
       docRef.put(file).on(
-        "state_change",
+        "state_changed",
         (snapshot) => console.log(snapshot),
         (err) => console.log(err),
         async () => {
           const downloadURL = await docRef.getDownloadURL();
-          Editor.insertEmbed(cursorLocation, "image", downloadURL);
+          await Editor.insertEmbed(cursorLocation, "image", downloadURL);
           resetUploader();
         }
       );
@@ -134,10 +139,10 @@ export default {
           this.loading = true;
           const storageRef = firebase.storage().ref();
           const docRef = storageRef.child(
-            `documents/BlogCoverPhotos/${this.$store.state.blogPhotoName}`
+            `documents/CoverPhotos/${this.$store.state.blogPhotoName}`
           );
           docRef.put(this.file).on(
-            "state_change",
+            "state_changed",
             (snapshot) => {
               console.log(snapshot);
             },
@@ -166,7 +171,7 @@ export default {
           return;
         }
         this.error = true;
-        this.errorMsg = "Please ensure you upload a cover photo!";
+        this.errorMsg = "Please ensure you upload a cover photo !";
         return;
       }
       this.error = true;
