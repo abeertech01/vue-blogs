@@ -40,7 +40,7 @@ export default {
     position: relative;
     background-color: $light-grey;
     max-width: pr(400);
-    padding: pr(32);
+    padding: pr(30);
     border-radius: pr(5);
 
     button {
@@ -52,6 +52,10 @@ export default {
       background: none;
       border: none;
       outline: none;
+
+      i {
+        color: $charcoal;
+      }
     }
 
     img {

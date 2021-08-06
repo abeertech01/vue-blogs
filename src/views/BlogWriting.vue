@@ -24,7 +24,7 @@
           <button
             @click="previewBlogPhoto"
             class="preview"
-            :class="{ active: havingPhoto }"
+            :class="{ active: this.$store.state.blogPhotoURL }"
           >
             Preview Photo
           </button>
@@ -36,7 +36,7 @@
           <vue-editor
             :customModules="customModulesForEditor"
             :editorOptions="editorSettings"
-            @image-added="handleEditorImage"
+            @image-added="handleImage"
             v-model="blogHTML"
           />
         </div>
@@ -53,24 +53,28 @@
 
 <script>
 import BlogPhotoPreview from "../components/BlogPhotoPreview.vue";
+
 import firebase from "firebase/app";
 import "firebase/storage";
 import db from "../firebase/firebaseInit";
+
 import Quill from "quill";
 window.Quill = Quill;
+import { VueEditor } from "vue2-editor";
 const ImageResize = require("quill-image-resize-module").default;
 Quill.register("modules/imageResize", ImageResize);
+
 export default {
   name: "BlogWriting",
   components: {
     BlogPhotoPreview,
+    VueEditor,
   },
   data() {
     return {
       file: null,
       error: null,
       errorMsg: "",
-      havingPhoto: null,
       customModulesForEditor: [{ alias: "imageResize", module: ImageResize }],
       editorSettings: {
         modules: {
@@ -110,17 +114,13 @@ export default {
       this.$store.commit("insertFileName", fileName);
       this.$store.commit("createFileURL", URL.createObjectURL(this.file));
     },
-    handleEditorImage(file, Editor, cursorLocation, resetUploader) {
+    handleImage(file, Editor, cursorLocation, resetUploader) {
       const storageRef = firebase.storage().ref();
       const docRef = storageRef.child(`documents/blogPostPhotos/${file.name}`);
       docRef.put(file).on(
         "state_change",
-        (snapshot) => {
-          console.log(snapshot);
-        },
-        (err) => {
-          console.log(err);
-        },
+        (snapshot) => console.log(snapshot),
+        (err) => console.log(err),
         async () => {
           const downloadURL = await docRef.getDownloadURL();
           Editor.insertEmbed(cursorLocation, "image", downloadURL);
@@ -178,13 +178,15 @@ export default {
       return;
     },
     previewBlogPhoto() {
-      this.$store.commit("openPhotoPreview");
+      if (this.$store.state.blogPhotoURL) {
+        this.$store.commit("openPhotoPreview");
+      }
     },
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../sass/variables";
 @import "../sass/mixins";
 .blog-writing {
@@ -217,7 +219,7 @@ export default {
     font-family: inherit;
     font-size: pr(16);
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: pr(10);
     border: none;
     margin: pr(10) 0;
     padding: 5px 10px;
@@ -274,23 +276,12 @@ export default {
       }
     }
     .editor {
-      height: 60vh;
-      display: flex;
-      flex-direction: column;
       .quillWrapper {
-        position: relative;
-        display: flex;
-        flex-direction: column;
         height: 100%;
       }
-      .ql-container {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        overflow: scroll;
-      }
-      .ql-editor {
-        padding: 20px 16px 30px;
+
+      #quill-container {
+        min-height: 50vh;
       }
     }
     .blog-actions {
@@ -302,7 +293,7 @@ export default {
   }
 
   .active {
-    background-color: #585858;
+    background-color: #686666;
   }
 }
 </style>
