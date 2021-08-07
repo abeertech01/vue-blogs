@@ -86,7 +86,7 @@ export default new Vuex.Store({
       dbResults.forEach((doc) => {
         if (!state.blogPosts.some((post) => post.blogID === doc.id)) {
           const data = {
-            blogID: doc.data().blogId,
+            blogId: doc.data().blogId,
             blogHTML: doc.data().blogHTML,
             blogCoverPhoto: doc.data().blogCoverPhoto,
             blogTitle: doc.data().blogTitle,
