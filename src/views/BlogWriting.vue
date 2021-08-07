@@ -118,7 +118,6 @@ export default {
         const fileName = this.file.name;
         this.$store.commit("insertFileName", fileName);
         this.$store.commit("createFileURL", URL.createObjectURL(this.file));
-        console.log(this.file);
       }
     },
     handleImage(file, Editor, cursorLocation, resetUploader) {
@@ -166,8 +165,12 @@ export default {
                 profileId: this.profileId,
                 date: timestamp,
               });
+              await this.$store.dispatch("getPost");
               this.loading = false;
-              this.$router.push({ name: "ViewBlog" });
+              this.$router.push({
+                name: "ViewBlog",
+                params: { blogid: dataBase.id },
+              });
             }
           );
           return;

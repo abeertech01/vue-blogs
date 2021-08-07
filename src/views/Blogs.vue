@@ -1,9 +1,11 @@
 <template>
-  <div>Blogs</div>
+  <div class="blogs"></div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "Blogs",
+};
 </script>
 
 <style>
