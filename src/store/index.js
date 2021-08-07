@@ -84,7 +84,7 @@ export default new Vuex.Store({
       const dataBase = await db.collection("blogPosts").orderBy("date", "desc");
       const dbResults = await dataBase.get();
       dbResults.forEach((doc) => {
-        if (!state.blogPosts.some((post) => post.blogID === doc.id)) {
+        if (!state.blogPosts.some((post) => post.blogId === doc.id)) {
           const data = {
             blogId: doc.data().blogId,
             blogHTML: doc.data().blogHTML,

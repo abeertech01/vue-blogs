@@ -21,8 +21,13 @@
           <li v-else>
             <p @click="logout">Logout</p>
           </li>
-          <li class="initial" v-if="profileInitials">
+          <!-- <li class="initial" v-if="profileInitials">
             <router-link :to="{ name: 'Profile' }" class="inside">{{
+              profileInitials.toUpperCase()
+            }}</router-link>
+          </li> -->
+          <li class="initial" v-if="profileInitials">
+            <router-link :to="{ name: 'ProfilePage' }" class="inside">{{
               profileInitials.toUpperCase()
             }}</router-link>
           </li>
@@ -36,10 +41,15 @@
       <div @click="openNav" v-if="menuOpen" class="mobile-menu-links">
         <ul>
           <li class="initial" v-if="profileInitials">
-            <router-link :to="{ name: 'Profile' }" class="inside">{{
+            <router-link :to="{ name: 'ProfilePage' }" class="inside">{{
               profileInitials.toUpperCase()
             }}</router-link>
           </li>
+          <!-- <li class="initial" v-if="profileInitials">
+            <router-link :to="{ name: 'Profile' }" class="inside">{{
+              profileInitials.toUpperCase()
+            }}</router-link>
+          </li> -->
           <li>
             <router-link :to="{ name: 'Home' }">Home</router-link>
           </li>
@@ -174,7 +184,6 @@ export default {
 
     a {
       position: relative;
-      bottom: pr(1);
       color: $light-grey;
     }
   }

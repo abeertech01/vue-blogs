@@ -15,10 +15,8 @@
           <a href="https://www.linkedin.com/in/abeertech01/" target="_blank"
             ><i class="bx bxl-linkedin-square"></i
           ></a>
-          <a
-            href="https://www.youtube.com/channel/UCtpkriCi3uO8iI4_NoBpRyw"
-            target="_blank"
-            ><i class="bx bxl-youtube"></i
+          <a href="https://github.com/abeertech01" target="_blank"
+            ><i class="bx bxl-github"></i
           ></a>
         </div>
       </div>

@@ -6,9 +6,9 @@ import Register from '../views/Register.vue'
 import ForgotPassword from '../views/ForgotPassword.vue'
 import Blogs from "../views/Blogs.vue"
 import BlogWriting from "../views/BlogWriting.vue"
-import Profile from "../views/Profile.vue"
 import BlogPreview from "../views/BlogPreview.vue"
 import ViewBlog from "../views/ViewBlog.vue"
+import ProfilePage from "../views/ProfilePage"
 
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -65,11 +65,11 @@ const routes = [
     }
   },
   {
-    path: '/profile',
-    name: 'Profile',
-    component: Profile,
+    path: '/profile-page',
+    name: 'ProfilePage',
+    component: ProfilePage,
     meta: {
-      title: "Profile"
+      title: "Profile Page"
     }
   },
   {
