@@ -96,7 +96,7 @@ export default new Vuex.Store({
           state.blogPosts.push(data);
         }
       });
-      state.postLoaded = true;
+      // state.postLoaded = true;
     },
   },
   modules: {
