@@ -1,5 +1,13 @@
 <template>
   <div class="blogs">
+    <div class="blogs__notice">
+      <marquee behavior="scroll" direction="left">
+        <p>Only Author can delete or edit posts. Others can only read them.</p>
+      </marquee>
+      <p class="no-marquee">
+        Only Author can delete or edit posts. Others can only read them.
+      </p>
+    </div>
     <div class="blogs__inside container">
       <Blog
         class="blogs__blog"
@@ -34,10 +42,35 @@ export default {
   @include bp-up(xlarge) {
     padding: pr(50) 0;
   }
+  &__notice {
+    margin: pr(15) pr(25);
+    overflow: hidden;
+    @include bp-up(large) {
+      overflow: initial;
+    }
+    marquee {
+      @include bp-up(medium) {
+        display: none;
+      }
+    }
+    .no-marquee {
+      // border: 1px solid magenta;
+      display: none;
+      text-align: center;
+      @include bp-up(medium) {
+        display: block;
+      }
+      @include bp-up(xlarge) {
+        position: relative;
+        bottom: pr(10);
+      }
+    }
+  }
   &__inside {
+    // border: 1px solid magenta;
     display: grid;
     gap: pr(20);
-    padding: pr(25);
+    padding: 0 pr(25) pr(25) pr(25);
 
     @include bp-up(medium) {
       grid-template-columns: repeat(2, 1fr);

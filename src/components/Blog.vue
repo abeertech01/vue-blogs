@@ -7,7 +7,7 @@
       <div class="edit-delete" v-show="isAuthor">
         <button class="edit"><i class="bx bxs-edit"></i></button>
         <button class="delete" @click="deleteIt">
-          <i class="bx bx-x-circle"></i>
+          <i class="bx bx-x"></i>
         </button>
       </div>
     </div>
@@ -84,7 +84,7 @@ export default {
       }
 
       i {
-        font-size: pr(18);
+        font-size: pr(20);
       }
     }
   }
