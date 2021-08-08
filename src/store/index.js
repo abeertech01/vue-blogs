@@ -98,6 +98,11 @@ export default new Vuex.Store({
       });
       // state.postLoaded = true;
     },
+    // async deletePost(context, payload) {
+    //   const post = await db.collection("blogPost").doc(payload);
+    //   await post.delete();
+
+    // }
   },
   modules: {
   }

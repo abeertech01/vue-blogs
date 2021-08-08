@@ -3,7 +3,12 @@
     <div
       :style="{ 'background-image': `url('${blogPost.blogCoverPhoto}')` }"
       class="coverPhoto"
-    ></div>
+    >
+      <div class="edit-delete">
+        <button class="edit"><i class="bx bxs-edit"></i></button>
+        <button class="delete"><i class="bx bx-x-circle"></i></button>
+      </div>
+    </div>
     <div class="info">
       <h3 class="title">{{ blogPost.blogTitle }}</h3>
       <p class="date">
@@ -35,6 +40,7 @@ export default {
   border-radius: pr(7);
   background-color: $light-grey-2;
   .coverPhoto {
+    position: relative;
     width: 100%;
     height: pr(260);
     background-repeat: no-repeat;
@@ -42,6 +48,28 @@ export default {
     background-position: center;
     border-radius: pr(7) pr(7) 0 0;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+
+    .edit-delete {
+      position: absolute;
+      top: pr(10);
+      right: pr(10);
+      button {
+        width: pr(30);
+        height: pr(30);
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+
+        &:not(:last-child) {
+          margin-right: pr(7);
+        }
+      }
+
+      i {
+        font-size: pr(18);
+      }
+    }
   }
 
   .info {

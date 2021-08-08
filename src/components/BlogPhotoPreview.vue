@@ -25,6 +25,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../sass/variables";
+@import "../sass/mixins";
 .blog-cover {
   position: fixed;
   top: 0;
@@ -42,14 +43,24 @@ export default {
     max-width: pr(400);
     padding: pr(30);
     border-radius: pr(5);
+    @include bp-up(large) {
+      max-width: pr(550);
+    }
 
     button {
+      // border: 1px solid magenta;
+      width: pr(40);
+      height: pr(40);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
       position: absolute;
-      top: 0;
+      top: pr(-10);
       right: 0;
       font-size: pr(30);
       cursor: pointer;
-      background: none;
+      background-color: $light-grey;
       border: none;
       outline: none;
 
