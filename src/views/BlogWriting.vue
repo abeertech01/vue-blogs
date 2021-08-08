@@ -115,6 +115,7 @@ export default {
     fileChange() {
       this.file = this.$refs.blogPhoto.files[0];
       if (this.file) {
+        this.$store.commit("storePhotoFile", this.file);
         const fileName = this.file.name;
         this.$store.commit("insertFileName", fileName);
         this.$store.commit("createFileURL", URL.createObjectURL(this.file));
@@ -192,6 +193,12 @@ export default {
         this.$store.commit("openPhotoPreview");
       }
     },
+  },
+  mounted() {
+    const theFile = this.$store.state.blogPhotoFile;
+    if (theFile) {
+      this.file = theFile;
+    }
   },
 };
 </script>

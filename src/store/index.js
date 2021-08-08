@@ -29,6 +29,7 @@ export default new Vuex.Store({
     blogPhotoName: "",
     blogPhotoURL: null,
     blogPhotoPreview: null,
+    blogPhotoFile: null,
     user: null,
     userPosts: [],
     profileId: null,
@@ -56,6 +57,9 @@ export default new Vuex.Store({
     },
     insertFileName(state, payload) {
       state.blogPhotoName = payload;
+    },
+    storePhotoFile(state, payload) {
+      state.blogPhotoFile = payload;
     },
     createFileURL(state, payload) {
       state.blogPhotoURL = payload;
