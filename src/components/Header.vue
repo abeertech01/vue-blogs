@@ -1,5 +1,6 @@
 <template>
   <div class="header">
+    <Loading v-show="loading" />
     <div class="header-inside container">
       <div class="logo">
         <router-link :to="{ name: 'Home' }">VueBlogs</router-link>
@@ -72,13 +73,18 @@
 </template>
 
 <script>
+import Loading from "../components/Loading.vue";
 import firebase from "firebase/app";
 import "firebase/auth";
 export default {
   name: "Header",
+  components: {
+    Loading,
+  },
   data() {
     return {
       menuOpen: false,
+      loading: null,
     };
   },
   methods: {
@@ -86,8 +92,10 @@ export default {
       this.menuOpen = !this.menuOpen;
     },
     logout() {
+      this.loading = true;
       firebase.auth().signOut();
       window.location.reload();
+      this.loading = false;
     },
   },
   computed: {

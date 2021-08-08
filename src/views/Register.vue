@@ -1,5 +1,6 @@
 <template>
   <div class="register">
+    <Loading v-show="loading" />
     <h1>VueBlogs</h1>
     <div class="register__inside">
       <form>
@@ -32,11 +33,15 @@
 </template>
 
 <script>
+import Loading from "../components/Loading.vue";
 import firebase from "firebase/app";
 import "firebase/auth";
 import db from "../firebase/firebaseInit";
 export default {
   name: "Register",
+  components: {
+    Loading,
+  },
   data() {
     return {
       name: "",
@@ -44,13 +49,15 @@ export default {
       password: "",
       error: null,
       errorMsg: "",
+      loading: null,
     };
   },
   methods: {
     async register() {
-      if (this.name !== "" && this.email !== "" && this.password.length < 6) {
+      if (this.name !== "" && this.email !== "" && this.password.length >= 6) {
         this.error = false;
         this.errorMsg = "";
+        this.loading = true;
         const firebaseAuth = await firebase.auth();
         const createUser = await firebaseAuth.createUserWithEmailAndPassword(
           this.email,
@@ -62,9 +69,11 @@ export default {
           name: this.name,
           email: this.email,
         });
+        this.loading = false;
         this.$router.push({ name: "Home" });
         return;
       }
+      this.loading = false;
       this.error = true;
       this.errorMsg =
         "Failed. Any field is empty or the given password is short";
@@ -125,6 +134,11 @@ export default {
           border-radius: pr(3);
         }
       }
+    }
+    .error {
+      color: red;
+      text-align: center;
+      margin-top: pr(15);
     }
   }
 

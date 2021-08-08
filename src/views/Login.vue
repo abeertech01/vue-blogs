@@ -1,5 +1,6 @@
 <template>
   <div class="login">
+    <Loading v-show="loading"/>
     <h1>VueBlogs</h1>
     <div class="login__inside">
       <form>
@@ -34,30 +35,37 @@
 </template>
 
 <script>
+import Loading from "../components/Loading.vue";
 import firebase from "firebase/app";
 import "firebase/auth";
 export default {
   name: "Login",
+  components: {
+    Loading
+  },
   data() {
     return {
       email: "",
       password: "",
       error: null,
       errorMsg: "",
+      loading: null,
     };
   },
   methods: {
     login() {
+      this.loading = true;
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
+          this.loading = false;
           this.$router.push({ name: "Home" });
           this.error = false;
           this.errorMsg = "";
-          console.log(firebase.auth().currentUser.uid);
         })
         .catch((err) => {
+          this.loading = false;
           this.error = true;
           this.errorMsg = err.message;
         });
