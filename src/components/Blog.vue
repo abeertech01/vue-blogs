@@ -4,7 +4,7 @@
       :style="{ 'background-image': `url('${blogPost.blogCoverPhoto}')` }"
       class="coverPhoto"
     >
-      <div class="edit-delete">
+      <div class="edit-delete" v-show="isAuthor">
         <button class="edit"><i class="bx bxs-edit"></i></button>
         <button class="delete" @click="deleteIt">
           <i class="bx bx-x-circle"></i>
@@ -33,14 +33,19 @@
 <script>
 export default {
   props: ["blogPost"],
-  // computed: {
-  //   isAuthor() {
-  //     return this.$store.state.user.uid === this.blogPost.profileId;
-  //   },
-  // },
+  computed: {
+    isAuthor() {
+      if (this.$store.state.user) {
+        return this.$store.state.user.uid === this.blogPost.profileId;
+      }
+      return false;
+    },
+  },
   methods: {
     deleteIt() {
-      this.$store.dispatch("deletePost", this.blogPost.blogId);
+      if (this.isAuthor) {
+        this.$store.dispatch("deletePost", this.blogPost.blogId);
+      }
     },
   },
 };
