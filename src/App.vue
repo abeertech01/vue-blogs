@@ -22,7 +22,6 @@ export default {
       this.$store.commit("updateUser", user);
       if (user) {
         this.$store.dispatch("getCurrentUser");
-        console.log(this.$store.state.profileEmail);
       }
     });
     this.checkRoute();
@@ -34,8 +33,7 @@ export default {
         if (
           this.$route.name === "Login" ||
           this.$route.name === "Register" ||
-          this.$route.name === "ForgotPassword" ||
-          this.$route.name === "Profile"
+          this.$route.name === "ForgotPassword"
         ) {
           this.$router.push({ name: "Home" });
         }

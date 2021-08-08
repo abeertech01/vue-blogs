@@ -30,6 +30,7 @@ export default new Vuex.Store({
     blogPhotoURL: null,
     blogPhotoPreview: null,
     user: null,
+    userPosts: [],
     profileId: null,
     profileName: null,
     profileEmail: null,
@@ -62,6 +63,9 @@ export default new Vuex.Store({
     updateBlogTitle(state, payload) {
       state.blogTitle = payload;
     },
+    filterBlogPosts(state, payload) {
+      state.blogPosts = state.blogPosts.filter((post) => post.blogId !== payload);
+    },
     openPhotoPreview(state) {
       state.blogPhotoPreview = !state.blogPhotoPreview;
     }
@@ -92,17 +96,18 @@ export default new Vuex.Store({
             blogTitle: doc.data().blogTitle,
             blogDate: doc.data().date,
             blogCoverPhotoName: doc.data().blogCoverPhotoName,
+            profileId: doc.data().profileId,
           };
           state.blogPosts.push(data);
         }
       });
       // state.postLoaded = true;
     },
-    // async deletePost(context, payload) {
-    //   const post = await db.collection("blogPost").doc(payload);
-    //   await post.delete();
-
-    // }
+    async deletePost(context, payload) {
+      const post = await db.collection("blogPosts").doc(payload);
+      await post.delete();
+      context.commit("filterBlogPosts", payload);
+    }
   },
   modules: {
   }

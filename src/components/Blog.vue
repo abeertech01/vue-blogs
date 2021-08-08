@@ -6,7 +6,9 @@
     >
       <div class="edit-delete">
         <button class="edit"><i class="bx bxs-edit"></i></button>
-        <button class="delete"><i class="bx bx-x-circle"></i></button>
+        <button class="delete" @click="deleteIt">
+          <i class="bx bx-x-circle"></i>
+        </button>
       </div>
     </div>
     <div class="info">
@@ -31,6 +33,16 @@
 <script>
 export default {
   props: ["blogPost"],
+  // computed: {
+  //   isAuthor() {
+  //     return this.$store.state.user.uid === this.blogPost.profileId;
+  //   },
+  // },
+  methods: {
+    deleteIt() {
+      this.$store.dispatch("deletePost", this.blogPost.blogId);
+    },
+  },
 };
 </script>
 
