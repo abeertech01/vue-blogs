@@ -8,7 +8,8 @@ import Blogs from "../views/Blogs.vue"
 import BlogWriting from "../views/BlogWriting.vue"
 import BlogPreview from "../views/BlogPreview.vue"
 import ViewBlog from "../views/ViewBlog.vue"
-import ProfilePage from "../views/ProfilePage"
+import ProfilePage from "../views/ProfilePage.vue"
+import EditBlog from "../views/EditBlog.vue";
 
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -86,6 +87,14 @@ const routes = [
     component: ViewBlog,
     meta: {
       title: "View Blog"
+    }
+  },
+  {
+    path: '/edit-blog/:blogid',
+    name: 'EditBlog',
+    component: EditBlog,
+    meta: {
+      title: "Edit Blog"
     }
   },
 ]

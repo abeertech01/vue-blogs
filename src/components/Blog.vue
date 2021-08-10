@@ -5,7 +5,9 @@
       class="coverPhoto"
     >
       <div class="edit-delete" v-show="isAuthor">
-        <button class="edit"><i class="bx bxs-edit"></i></button>
+        <button class="edit" @click="editIt">
+          <i class="bx bxs-edit"></i>
+        </button>
         <button class="delete" @click="deleteIt">
           <i class="bx bx-x"></i>
         </button>
@@ -47,6 +49,12 @@ export default {
         this.$store.dispatch("deletePost", this.blogPost.blogId);
       }
     },
+    editIt() {
+      this.$router.push({
+        name: "EditBlog",
+        params: { blogid: this.blogPost.blogId },
+      });
+    },
   },
 };
 </script>
@@ -75,6 +83,7 @@ export default {
         height: pr(30);
         border: none;
         outline: none;
+        cursor: pointer;
         border-radius: 50%;
         box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
 

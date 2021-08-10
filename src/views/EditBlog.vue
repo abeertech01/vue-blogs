@@ -1,8 +1,8 @@
 <template>
-  <div class="blog-writing">
+  <div class="edit-blog">
     <BlogPhotoPreview v-show="this.$store.state.blogPhotoPreview" />
     <Loading v-show="loading" />
-    <div class="blog-writing__inside container">
+    <div class="edit-blog__inside container">
       <div v-show="error" class="err-message">
         <p><span>Error:</span> {{ this.errorMsg }}</p>
       </div>
@@ -42,7 +42,7 @@
           />
         </div>
         <div class="blog-actions">
-          <button @click="uploadBlog">Publish blog</button>
+          <button @click="saveChanges">Save Changes</button>
           <router-link class="router-button" :to="{ name: 'BlogPreview' }"
             >Blog Preview</router-link
           >
@@ -67,7 +67,7 @@ const ImageResize = require("quill-image-resize-module").default;
 Quill.register("modules/imageResize", ImageResize);
 
 export default {
-  name: "BlogWriting",
+  name: "EditBlog",
   components: {
     BlogPhotoPreview,
     Loading,
@@ -79,6 +79,7 @@ export default {
       error: null,
       errorMsg: "",
       loading: null,
+      currentBlog: null,
       customModulesForEditor: [{ alias: "imageResize", module: ImageResize }],
       editorSettings: {
         modules: {
@@ -86,6 +87,14 @@ export default {
         },
       },
     };
+  },
+  async mounted() {
+    this.currentBlog = await this.$store.state.blogPosts.find(
+      (post) => post.blogId === this.$route.params.blogid
+    );
+    if (this.currentBlog) {
+      this.$store.commit("setBlogState", this.currentBlog);
+    }
   },
   computed: {
     blogHTML: {
@@ -114,7 +123,6 @@ export default {
   methods: {
     fileChange() {
       this.file = this.$refs.blogPhoto.files[0];
-      console.log(this.file);
       if (this.file) {
         this.$store.commit("storePhotoFile", this.file);
         const fileName = this.file.name;
@@ -136,7 +144,10 @@ export default {
         }
       );
     },
-    uploadBlog() {
+    async saveChanges() {
+      const dataBase = await db
+        .collection("blogPosts")
+        .doc(this.$route.params.blogid);
       if (this.blogTitle.length !== 0 && this.blogHTML.length !== 0) {
         if (this.file) {
           this.loading = true;
@@ -155,19 +166,19 @@ export default {
             },
             async () => {
               const downloadURL = await docRef.getDownloadURL();
-              const timestamp = await Date.now();
-              const dataBase = await db.collection("blogPosts").doc();
 
-              await dataBase.set({
-                blogId: dataBase.id,
+              await dataBase.update({
                 blogHTML: this.blogHTML,
                 blogCoverPhoto: downloadURL,
                 blogCoverPhotoName: this.blogCoverPhotoName,
                 blogTitle: this.blogTitle,
-                profileId: this.profileId,
-                date: timestamp,
               });
-              await this.$store.dispatch("getPost");
+              console.log(this.blogTitle);
+              console.log(this.blogHTML);
+              await this.$store.dispatch(
+                "updatePost",
+                this.$route.params.blogid
+              );
               this.loading = false;
               this.$router.push({
                 name: "ViewBlog",
@@ -177,9 +188,17 @@ export default {
           );
           return;
         }
-        this.error = true;
-        this.errorMsg = "Please ensure you upload a cover photo !";
-        return;
+        this.loading = true;
+        await dataBase.update({
+          blogHTML: this.blogHTML,
+          blogTitle: this.blogTitle,
+        });
+        await this.$store.dispatch("updatePost", this.$route.params.blogid);
+        this.loading = false;
+        this.$router.push({
+          name: "ViewBlog",
+          params: { blogid: dataBase.id },
+        });
       }
       this.error = true;
       this.errorMsg =
@@ -198,12 +217,6 @@ export default {
       this.$store.commit("makeEmptyFields");
     },
   },
-  mounted() {
-    const theFile = this.$store.state.blogPhotoFile;
-    if (theFile) {
-      this.file = theFile;
-    }
-  },
   beforeRouteEnter(_, from, next) {
     next((vm) => {
       if (from.name !== "BlogPreview") {
@@ -217,7 +230,7 @@ export default {
 <style lang="scss">
 @import "../sass/variables";
 @import "../sass/mixins";
-.blog-writing {
+.edit-blog {
   min-height: calc(100vh - 3.4375rem);
 
   &__inside {

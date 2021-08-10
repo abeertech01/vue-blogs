@@ -41,6 +41,7 @@ export default {
     position: relative;
     background-color: $light-grey;
     max-width: pr(400);
+    max-height: 80vh;
     padding: pr(30);
     border-radius: pr(5);
     @include bp-up(large) {

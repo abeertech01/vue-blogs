@@ -72,6 +72,18 @@ export default new Vuex.Store({
     },
     openPhotoPreview(state) {
       state.blogPhotoPreview = !state.blogPhotoPreview;
+    },
+    setBlogState(state, payload) {
+      state.blogHTML = payload.blogHTML;
+      state.blogTitle = payload.blogTitle;
+      state.blogPhotoURL = payload.blogCoverPhoto;
+      state.blogPhotoName = payload.blogCoverPhotoName;
+    },
+    makeEmptyFields(state) {
+      state.blogTitle = "";
+      state.blogHTML = "Write your blog here...";
+      state.blogPhotoName = "";
+      state.blogPhotoURL = null;
     }
   },
   actions: {
@@ -106,6 +118,10 @@ export default new Vuex.Store({
         }
       });
       // state.postLoaded = true;
+    },
+    async updatePost(context, payload) {
+      context.commit("filterBlogPosts", payload);
+      await context.dispatch("getPost");
     },
     async deletePost(context, payload) {
       const post = await db.collection("blogPosts").doc(payload);
