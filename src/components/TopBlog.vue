@@ -9,18 +9,22 @@
         ></router-link>
       </div>
     </div>
-    <div class="top-blog__photo">
-      <img
-        :src="require(`../assets/samplePics/${blog.photo}.jpg`)"
-        alt="Blog Photo"
-      />
-    </div>
+    <div :style="imageStyle" class="top-blog__photo"></div>
   </div>
 </template>
 
 <script>
 export default {
   props: ["blog"],
+  computed: {
+    imageStyle() {
+      return {
+        backgroundImage: `url(${require("@/assets/samplePics/" +
+          this.blog.photo +
+          ".jpg")})`,
+      };
+    },
+  },
 };
 </script>
 
@@ -28,52 +32,19 @@ export default {
 @import "../sass/variables";
 @import "../sass/mixins";
 .top-blog {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  gap: pr(15);
 
-  @include bp-up(large) {
-    flex-direction: row;
-    &:nth-child(odd) {
-      .top-blog__intro {
-        order: 1;
-      }
-      .top-blog__photo {
-        order: 2;
-      }
-    }
-  }
   &__intro {
     order: 2;
-    flex: 1;
-
-    @include bp-up(large) {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      overflow: hidden;
-      padding: pr(50);
-    }
-    .preview {
-      width: 100%;
-      margin-bottom: pr(10);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .reading-link {
-      a {
-        text-decoration: underline;
-      }
-    }
   }
+
   &__photo {
     order: 1;
-    flex: 1;
-
-    img {
-      width: 100%;
-    }
+    padding-top: 72%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 }
 </style>
