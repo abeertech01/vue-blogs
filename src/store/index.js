@@ -80,6 +80,9 @@ export default new Vuex.Store({
       state.blogPhotoURL = payload.blogCoverPhoto;
       state.blogPhotoName = payload.blogCoverPhotoName;
     },
+    setTopBlogs(state) {
+      state.topBlogs = state.blogPosts.filter((post) => post.blogTitle === 'Top Blog One' || post.blogTitle === 'Top Blog Two')
+    },
     makeEmptyFields(state) {
       state.blogTitle = "";
       state.blogHTML = "Write your blog here...";
@@ -101,7 +104,7 @@ export default new Vuex.Store({
       });
       context.commit("setProfileInitials");
     },
-    async getPost({ state }) {
+    async getPost({ commit, state }) {
       const dataBase = await db.collection("blogPosts").orderBy("date", "desc");
       const dbResults = await dataBase.get();
       dbResults.forEach((doc) => {
@@ -118,6 +121,7 @@ export default new Vuex.Store({
           state.blogPosts.push(data);
         }
       });
+      commit("setTopBlogs");
       // state.postLoaded = true;
     },
     async updatePost(context, payload) {

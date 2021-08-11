@@ -1,8 +1,8 @@
 <template>
   <div class="top-blog">
     <div class="top-blog__intro">
-      <h2 class="title">{{ blog.title }}</h2>
-      <p class="preview">{{ blog.preview }}</p>
+      <h2 class="title">{{ blog.blogTitle }}</h2>
+      <p class="preview">{{ preview }}</p>
       <div class="reading-link">
         <router-link to="#"
           >Read the blog <i class="bx bx-arrow-back bx-rotate-180"></i
@@ -19,10 +19,11 @@ export default {
   computed: {
     imageStyle() {
       return {
-        backgroundImage: `url(${require("@/assets/samplePics/" +
-          this.blog.photo +
-          ".jpg")})`,
+        backgroundImage: `url('${this.blog.blogCoverPhoto}')`,
       };
+    },
+    preview() {
+      return "lorem ipsum dolor";
     },
   },
 };

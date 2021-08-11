@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     topBlogs() {
-      return this.$store.state.sampleTopBlogs;
+      return this.$store.state.topBlogs;
     },
   },
 };
