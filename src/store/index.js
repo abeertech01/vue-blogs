@@ -23,6 +23,7 @@ export default new Vuex.Store({
       }
     ],
     blogPosts: [],
+    topBlogs: [],
     postLoaded: null,
     blogHTML: "Write your blog here...",
     blogTitle: "",

@@ -37,6 +37,17 @@ export default {
     this.coverPhoto = this.currentBlog.blogCoverPhoto;
     this.html = this.currentBlog.blogHTML;
   },
+  beforeRouteEnter(_, from, next) {
+    if (from.name === "Blogs") {
+      next();
+    } else if (from.name === "BlogWriting") {
+      next();
+    } else if (from.name === "EditBlog") {
+      next();
+    } else {
+      next({ name: "Home" });
+    }
+  },
 };
 </script>
 

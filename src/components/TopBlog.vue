@@ -35,8 +35,27 @@ export default {
   display: grid;
   gap: pr(15);
 
+  @include bp-up(medium) {
+    grid-template-columns: repeat(2, 1fr);
+
+    &:nth-child(odd) {
+      .top-blog__intro {
+        order: 1;
+      }
+      .top-blog__photo {
+        order: 2;
+      }
+    }
+  }
+
   &__intro {
     order: 2;
+
+    @include bp-up(medium) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
   }
 
   &__photo {
