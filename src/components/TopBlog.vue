@@ -2,7 +2,7 @@
   <div class="top-blog">
     <div class="top-blog__intro">
       <h2 class="title">{{ blog.blogTitle }}</h2>
-      <p class="preview">{{ preview }}</p>
+      <div class="blog-preview" v-html="previewPortion"></div>
       <div class="reading-link">
         <router-link to="#"
           >Read the blog <i class="bx bx-arrow-back bx-rotate-180"></i
@@ -22,8 +22,8 @@ export default {
         backgroundImage: `url('${this.blog.blogCoverPhoto}')`,
       };
     },
-    preview() {
-      return "lorem ipsum dolor";
+    previewPortion() {
+      return this.blog.blogHTML.match(/<p>.{20,}<\/p>/).join("");
     },
   },
 };
@@ -60,6 +60,7 @@ export default {
   &__intro {
     order: 2;
     padding: 5%;
+    overflow: hidden;
 
     @include bp-up(medium) {
       // border: 1px solid magenta;
@@ -70,6 +71,16 @@ export default {
 
     @include bp-up(large) {
       padding: 20%;
+    }
+
+    .blog-preview {
+      width: 100%;
+      line-height: 1.5;
+      max-height: pr(24);
+      margin-bottom: pr(10);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 

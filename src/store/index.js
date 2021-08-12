@@ -24,6 +24,7 @@ export default new Vuex.Store({
     ],
     blogPosts: [],
     topBlogs: [],
+    blogPreviews: null,
     postLoaded: null,
     blogHTML: "Write your blog here...",
     blogTitle: "",
@@ -121,7 +122,7 @@ export default new Vuex.Store({
           state.blogPosts.push(data);
         }
       });
-      commit("setTopBlogs");
+      commit("setTopBlogs")
       // state.postLoaded = true;
     },
     async updatePost(context, payload) {
