@@ -34,10 +34,12 @@ export default {
 @import "../sass/mixins";
 .top-blog {
   display: grid;
-  gap: pr(15);
+  background-color: $light-grey-2;
+  border-radius: pr(5);
 
   @include bp-up(medium) {
     grid-template-columns: repeat(2, 1fr);
+    border-radius: 0;
 
     &:nth-child(odd) {
       .top-blog__intro {
@@ -47,24 +49,40 @@ export default {
         order: 2;
       }
     }
+
+    &:nth-child(even) {
+      .top-blog__intro {
+        align-items: flex-end;
+      }
+    }
   }
 
   &__intro {
     order: 2;
+    padding: 5%;
 
     @include bp-up(medium) {
+      // border: 1px solid magenta;
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+
+    @include bp-up(large) {
+      padding: 20%;
     }
   }
 
   &__photo {
     order: 1;
-    padding-top: 72%;
+    padding-top: 70%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    border-radius: pr(5) pr(5) 0 0;
+    @include bp-up(medium) {
+      border-radius: 0;
+    }
   }
 }
 </style>

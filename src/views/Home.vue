@@ -155,6 +155,12 @@ export default {
       &:not(:last-child) {
         margin-bottom: pr(60);
       }
+
+      @include bp-up(medium) {
+        &:not(:last-child) {
+          margin-bottom: 0;
+        }
+      }
     }
   }
 }
