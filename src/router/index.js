@@ -121,7 +121,7 @@ router.beforeEach((to, _, next) => {
   document.title = `${to.meta.title} | VueBlogs`;
   next();
 
-  if (to.name === 'Home' || to.name === 'Login' || to.name === 'Register' || to.name === 'ProfilePage' || to.name === 'ForgotPassword' || to.name === 'Blogs') {
+  if (to.name === 'Home' || to.name === 'Login' || to.name === 'Register' || to.name === 'ProfilePage' || to.name === 'ForgotPassword' || to.name === 'Blogs' || to.name === 'ViewBlog') {
     next();
   } else {
     let user = firebase.auth().currentUser;
