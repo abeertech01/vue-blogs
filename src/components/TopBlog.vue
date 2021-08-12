@@ -4,7 +4,7 @@
       <h2 class="title">{{ blog.blogTitle }}</h2>
       <div class="blog-preview" v-html="previewPortion"></div>
       <div class="reading-link">
-        <router-link to="#"
+        <router-link :to="{ name: 'ViewBlog', params: { blogid: blog.blogId } }"
           >Read the blog <i class="bx bx-arrow-back bx-rotate-180"></i
         ></router-link>
       </div>

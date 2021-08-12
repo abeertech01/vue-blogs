@@ -10,6 +10,7 @@ import BlogPreview from "../views/BlogPreview.vue"
 import ViewBlog from "../views/ViewBlog.vue"
 import ProfilePage from "../views/ProfilePage.vue"
 import EditBlog from "../views/EditBlog.vue";
+import NotFound from "../views/NotFound.vue";
 
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -95,6 +96,14 @@ const routes = [
     component: EditBlog,
     meta: {
       title: "Edit Blog"
+    }
+  },
+  {
+    path: '/:notFound(.*)',
+    name: 'NotFound',
+    component: NotFound,
+    meta: {
+      title: "Not Found"
     }
   },
 ]

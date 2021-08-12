@@ -28,6 +28,11 @@ export default {
       html: "",
     };
   },
+  computed: {
+    thisRoute() {
+      return this.$route;
+    },
+  },
   async mounted() {
     this.currentBlog = await this.$store.state.blogPosts.find((post) => {
       return post.blogId === this.$route.params.blogid;
@@ -43,6 +48,8 @@ export default {
     } else if (from.name === "BlogWriting") {
       next();
     } else if (from.name === "EditBlog") {
+      next();
+    } else if (from.name === "Home") {
       next();
     } else {
       next({ name: "Home" });
